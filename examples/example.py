@@ -1,13 +1,13 @@
-from aetherweb import WebServer
+import aetherweb
 
-server = WebServer()
+server = aetherweb.WebServer()
 server.start()
 
 while True:
-    connection, address = server.wait_connection()
-    raw_request = server.wait_request(connection)
-    request = server.unpack_request(raw_request)
+    connection = server.wait_connection()
+    raw_request = connection.wait_request()
+    request = aetherweb.unpack_request(raw_request)
 
     if request["method"] == "GET":
         if request["path"] == "/":
-            server.respond(connection, f"Hello, {address[0]}!")
+            connection.respond(f"Hello, {connection.get_address()}!")
