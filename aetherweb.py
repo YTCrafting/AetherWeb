@@ -129,16 +129,14 @@ class Connection:
     def get_port(self):
         return self.port
 
-    def respond(self, content, statuscode: int = 200):
+    def respond(self, content, status_code: int = 200, content_type: str = "text/html"):
         if isinstance(content, str):
             response_body = content.encode("utf-8")
-            content_type = "text/html"
         elif isinstance(content, bytes):
             response_body = content
-            content_type = "application/octet-stream"
         else:
             raise TypeError("Content must be of type str or bytes")
-        response_line = f"HTTP/1.1 {statuscode} {STATUSCODE_NAMES[statuscode]}\r\n"
+        response_line = f"HTTP/1.1 {status_code} {STATUSCODE_NAMES[status_code]}\r\n"
         response_headers = f"Content-Type: {content_type}\r\n"
         response_headers += f"Content-Length: {len(response_body)}\r\n"
         response_headers += "Connection: close\r\n"
