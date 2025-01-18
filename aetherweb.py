@@ -183,3 +183,13 @@ def extract_cookies(headers:list) -> dict:
                 key, value = pair.split("=")
                 cookies[key] = value
     return cookies
+
+def split_path(path):
+    base_path = path.split("?")[0]
+    try:
+        parameters = {}
+        for i in path.split("?")[1].split("&"):
+            parameters[i.split("=")[0]] = i.split("=")[1]
+    except:
+        parameters = {}
+    return base_path, parameters
